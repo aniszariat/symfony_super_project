@@ -11,6 +11,10 @@ class MainController extends AbstractController
 
     public function test()
     {
-        return $this->render("main.html.twig");
+        $name='Anis';
+        $age=28;
+        return $this->render("main.html.twig", [
+            'name'=>$name,'age'=>$age
+        ]);
     }
 }
