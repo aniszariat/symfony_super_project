@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\OrdersRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
@@ -24,6 +26,14 @@ class Orders
 
     #[ORM\Column(options:['default'=>'CURRENT_TIMESTAMP'])]
     private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\OneToMany(mappedBy: 'orders', targetEntity: OdersDetails::class, orphanRemoval: true)]
+    private Collection $odersDetails;
+
+    public function __construct()
+    {
+        $this->odersDetails = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +84,36 @@ class Orders
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OdersDetails>
+     */
+    public function getOdersDetails(): Collection
+    {
+        return $this->odersDetails;
+    }
+
+    public function addOdersDetail(OdersDetails $odersDetail): static
+    {
+        if (!$this->odersDetails->contains($odersDetail)) {
+            $this->odersDetails->add($odersDetail);
+            $odersDetail->setOrders($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOdersDetail(OdersDetails $odersDetail): static
+    {
+        if ($this->odersDetails->removeElement($odersDetail)) {
+            // set the owning side to null (unless already changed)
+            if ($odersDetail->getOrders() === $this) {
+                $odersDetail->setOrders(null);
+            }
+        }
 
         return $this;
     }
