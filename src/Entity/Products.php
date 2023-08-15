@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\CreatedAtTrait;
+use App\Entity\Trait\SlugTrait;
 use App\Repository\ProductsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ProductsRepository::class)]
 class Products
 {
+    use CreatedAtTrait;
+    use SlugTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -32,8 +36,6 @@ class Products
     #[ORM\JoinColumn(nullable: false)]
     private ?Categories $categories = null;
 
-    #[ORM\Column(options:['default'=>'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: Images::class, orphanRemoval: true)]
     private $images;
@@ -45,6 +47,7 @@ class Products
     {
         $this->images = new ArrayCollection();
         $this->odersDetails = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
 
@@ -113,17 +116,7 @@ class Products
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, OdersDetails>

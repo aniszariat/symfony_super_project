@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Trait\CreatedAtTrait ;
 use App\Repository\OrdersRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
 class Orders
 {
+    use CreatedAtTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -24,8 +26,6 @@ class Orders
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?User $user = null;
 
-    #[ORM\Column(options:['default'=>'CURRENT_TIMESTAMP'])]
-    private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\OneToMany(mappedBy: 'orders', targetEntity: OdersDetails::class, orphanRemoval: true)]
     private Collection $odersDetails;
@@ -33,6 +33,7 @@ class Orders
     public function __construct()
     {
         $this->odersDetails = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -76,17 +77,6 @@ class Orders
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, OdersDetails>
