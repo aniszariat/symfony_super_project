@@ -1,26 +1,18 @@
 <?php
 
-namespace App\Controller ;
+namespace App\Controller;
 
-use SebastianBergmann\CodeCoverage\Report\Html\Renderer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    #[Route('/test', name:'app_test')]
-
-    public function test()
+    #[Route('/main', name: 'app_main')]
+    public function index(): Response
     {
-        $name='Anis';
-        $age=28;
-        return $this->render("main.html.twig", [
-            'name'=>$name,'age'=>$age
+        return $this->render('main/index.html.twig', [
+            'controller_name' => 'MainController',
         ]);
-    }
-    #[Route('/contact/{id}', name:'app_contact', condition: "params['id']<100")]
-    public function contact($id)
-    {
-        return $this->render("contact.html.twig", ['id'=>$id]);
     }
 }
