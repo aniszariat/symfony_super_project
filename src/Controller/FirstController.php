@@ -6,7 +6,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Renderer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-class MainController extends AbstractController
+class FirstController extends AbstractController
 {
     #[Route('/test', name:'app_test')]
 
