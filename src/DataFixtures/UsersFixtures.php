@@ -27,7 +27,7 @@ class UsersFixtures extends Fixture
         $admin->setPassword($this->passwordEncoder->hashPassword($admin, 'anis123'));
         $manager->persist($admin);
 
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create('fr_FR');
         for ($usr=0; $usr <10 ; $usr++) {
             $user = new User();
             $user->setLastname($faker->lastName);
