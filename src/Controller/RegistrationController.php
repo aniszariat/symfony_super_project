@@ -60,13 +60,13 @@ class RegistrationController extends AbstractController
 
             // On envoie un mail
             $emailService->send(
-                'no-reply@monsite.net',
+                'zariatanis.az@gmail.com',
                 $user->getEmail(),
                 'Activation de votre compte sur le site e-commerce',
                 'register',
                 compact('user', 'token')
             );
-            dd($token);
+            // dd($token);
             return $userAuthenticator->authenticateUser(
                 $user,
                 $authenticator,
@@ -94,7 +94,7 @@ class RegistrationController extends AbstractController
                 $user->setIsVerified(true);
                 $em->flush($user);
                 $this->addFlash('success', 'Utilisateur activé');
-                return $this->redirectToRoute('app_profile');
+                return $this->redirectToRoute('app_profile_index');
             }
         }
         // Ici un problème se pose dans le token
@@ -114,7 +114,7 @@ class RegistrationController extends AbstractController
 
         if($user->is) {
             $this->addFlash('warning', 'Cet utilisateur est déjà activé');
-            return $this->redirectToRoute('app_profile');
+            return $this->redirectToRoute('app_profile_index');
         }
 
         // On génère le JWT de l'utilisateur
@@ -141,7 +141,7 @@ class RegistrationController extends AbstractController
             compact('user', 'token')
         );
         $this->addFlash('success', 'Email de vérification envoyé');
-        return $this->redirectToRoute('app_profile');
+        return $this->redirectToRoute('app_profile_index');
     }
 
 
