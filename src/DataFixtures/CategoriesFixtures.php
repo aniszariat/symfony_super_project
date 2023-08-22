@@ -5,7 +5,6 @@ namespace App\DataFixtures;
 use App\Entity\Categories;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use SebastianBergmann\LinesOfCode\Counter;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class CategoriesFixtures extends Fixture
