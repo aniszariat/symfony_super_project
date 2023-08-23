@@ -1,25 +1,100 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Détails de{{product.name}}{% endblock %}
+{% block title %}Détails de
+{{ product.name }}
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper {
-        margin: 1em auto;
-        max-width: 800px;
-        width: 95%;
-        font: 18px/1.5 sans-serif;
-    }
+<main class="container">
+    <section class="row">
+        <div class="col-12">
+            <h1>{{ product.name }}</h1>
+        </div>
+        <div class="col-6">
 
-    .example-wrapper code {
-        background: #F5F5F5;
-        padding: 2px 6px;
-    }
-</style>
+            {#{ dump(product)}}
+            {{ dump(product.images)}#}
+            images
 
-<div class="example-wrapper">
-    <h1>Détails de{{product.name}}</h1>
+            {#<div id="carouselExampleIndicators" class="carousel slide">
+                <div class="carousel-indicators">
+                    {% for iteration in 1..product.images|length %}
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{iteration-1}}"
+                        {{ (loop.index0 ) ? 'class="active" aria-current="true"' : '' }}
+                        aria-label="Slide {{iteration}}"></button>
+                    {% endfor %}
+                    <!-- <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button> -->
+                </div>
+                <div class="carousel-inner">
+                    {% for image in product.images %}
 
+                    <pre>
+                            { dump(image)}
+                        </pre>
+                    <div class="carousel-item {{ (loop.first ) ? ' active' : '' }}">
+                        <img src="{{asset('assets/uploads/')~ image.name}}" class="d-block w-100" alt="{{image.name}}">
+                    </div>
+                    {% endfor %}
 
-</div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>#}
+
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    {% for iteration in 1..product.images|length %}
+                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide-to="{{ iteration - 1 }}" {{ (loop.first ) ?'class="active"
+                        aria-current="true"' : '' }} aria-label="Slide {{ iteration }}">
+                    </button>
+                        {% endfor %}
+                </div>
+                <div class="carousel-inner">
+                        {% for image in product.images %}
+                            <div class="carousel-item {{ (loop.first ) ? ' active' : '' }}">
+                        <img src="{{asset('assets/uploads/')~image.name}}" class="d-block w-100"
+                            alt="{{ product.name }} {{image.name }}">
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        </div>
+        <div class="col-6">
+            <p>{{ product.description }}</p>
+            <p>Catégorie : {{ product.categories.name }}</p>
+            <p>Prix : {{ product.price / 100 }} €</p>
+            {% if product.stock > 0 %}
+            <a href="#" class="btn btn-success">Ajouter au panier</a>
+            {% else %}
+            <p class="text-danger">Temporairement en rupture de stock</p>
+            {% endif %}
+            {#
+            {{ path('cart_add', {id: product.id}) }}
+            #}
+        </div>
+    </section>
+</main>
 {% endblock %}
