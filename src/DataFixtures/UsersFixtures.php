@@ -23,12 +23,12 @@ class UsersFixtures extends Fixture
         $admin->setAddress('16 Rue Taeib El Mhiri Beni Khiar');
         $admin->setCity('Beni Khiar');
         $admin->setZipcode('8060');
-        $admin->setRoles(['ADMIN_ROLE']);
+        $admin->setRoles(['ROLE_ADMIN']);
         $admin->setPassword($this->passwordEncoder->hashPassword($admin, 'anis123'));
         $manager->persist($admin);
 
         $faker = Faker\Factory::create('fr_FR');
-        for ($usr=0; $usr <10 ; $usr++) {
+        for ($usr = 0; $usr < 10 ; $usr++) {
             $user = new User();
             $user->setLastname($faker->lastName);
             $user->setFirstname($faker->firstName);

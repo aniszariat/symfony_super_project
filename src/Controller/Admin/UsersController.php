@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response ;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin', name:'app_admin')]
+#[Route('/admin/users', name:'app_admin')]
 class UsersController extends AbstractController
 {
     #[Route('/', name:'_index')]

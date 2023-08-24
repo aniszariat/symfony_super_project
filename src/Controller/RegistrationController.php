@@ -112,7 +112,7 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
-        if($user->is) {
+        if($user->isIsVerified()) {
             $this->addFlash('warning', 'Cet utilisateur est déjà activé');
             return $this->redirectToRoute('app_profile_index');
         }
